@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="uk">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Архітектура Rescuers.life</title>
+    <style>
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        margin: 0;
+        padding: 20px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: #333;
+      }
+
+      .container {
+        max-width: 1400px;
+        margin: 0 auto;
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+        overflow: hidden;
+      }
+
+      .header {
+        background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+        color: white;
+        padding: 30px;
+        text-align: center;
+      }
+
+      .header h1 {
+        margin: 0 0 10px 0;
+        font-size: 2.5em;
+        font-weight: 600;
+      }
+
+      .header p {
+        margin: 0;
+        font-size: 1.2em;
+        opacity: 0.9;
+      }
+
+      .main-content {
+        padding: 40px;
+      }
+
+      .architecture-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 30px;
+        margin-bottom: 40px;
+      }
+
+      .layer {
+        background: #f8fafc;
+        border-radius: 15px;
+        padding: 25px;
+        border: 2px solid #e2e8f0;
+        transition: all 0.3s ease;
+      }
+
+      .layer:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        border-color: #4f46e5;
+      }
+
+      .layer h3 {
+        color: #4f46e5;
+        margin: 0 0 15px 0;
+        font-size: 1.4em;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .layer-icon {
+        width: 24px;
+        height: 24px;
+        background: #4f46e5;
+        border-radius: 6px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 12px;
+        font-weight: bold;
+      }
+
+      .component-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      .component-list li {
+        background: white;
+        margin: 8px 0;
+        padding: 12px;
+        border-radius: 8px;
+        border-left: 4px solid #4f46e5;
+        font-size: 0.9em;
+        transition: all 0.2s ease;
+      }
+
+      .component-list li:hover {
+        background: #f1f5f9;
+        transform: translateX(5px);
+      }
+
+      .tech-stack {
+        background: #1e293b;
+        color: white;
+        border-radius: 15px;
+        padding: 30px;
+        margin: 30px 0;
+      }
+
+      .tech-stack h3 {
+        color: #60a5fa;
+        margin: 0 0 20px 0;
+        font-size: 1.5em;
+      }
+
+      .tech-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+      }
+
+      .tech-category {
+        background: #334155;
+        padding: 20px;
+        border-radius: 10px;
+      }
+
+      .tech-category h4 {
+        color: #a78bfa;
+        margin: 0 0 10px 0;
+        font-size: 1.1em;
+      }
+
+      .tech-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      .tech-list li {
+        color: #e2e8f0;
+        margin: 5px 0;
+        font-size: 0.9em;
+      }
+
+      .flow-diagram {
+        background: #f1f5f9;
+        border-radius: 15px;
+        padding: 30px;
+        margin: 30px 0;
+      }
+
+      .flow-diagram h3 {
+        color: #1e293b;
+        margin: 0 0 25px 0;
+        font-size: 1.5em;
+        text-align: center;
+      }
+
+      .flow-steps {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 20px;
+      }
+
+      .flow-step {
+        background: white;
+        border-radius: 12px;
+        padding: 20px;
+        text-align: center;
+        min-width: 200px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        position: relative;
+      }
+
+      .flow-step::after {
+        content: "→";
+        position: absolute;
+        right: -30px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 24px;
+        color: #4f46e5;
+        font-weight: bold;
+      }
+
+      .flow-step:last-child::after {
+        display: none;
+      }
+
+      .flow-step h4 {
+        color: #4f46e5;
+        margin: 0 0 10px 0;
+        font-size: 1.1em;
+      }
+
+      .flow-step p {
+        margin: 0;
+        font-size: 0.85em;
+        color: #64748b;
+      }
+
+      .api-connections {
+        background: #ecfdf5;
+        border-radius: 15px;
+        padding: 30px;
+        margin: 30px 0;
+        border: 2px solid #10b981;
+      }
+
+      .api-connections h3 {
+        color: #047857;
+        margin: 0 0 20px 0;
+        font-size: 1.5em;
+      }
+
+      .api-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 20px;
+      }
+
+      .api-item {
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+        border-left: 5px solid #10b981;
+      }
+
+      .api-item h4 {
+        color: #047857;
+        margin: 0 0 10px 0;
+      }
+
+      .api-item p {
+        margin: 5px 0;
+        font-size: 0.9em;
+        color: #374151;
+      }
+
+      .data-flow {
+        background: #fef3c7;
+        border-radius: 15px;
+        padding: 30px;
+        margin: 30px 0;
+        border: 2px solid #f59e0b;
+      }
+
+      .data-flow h3 {
+        color: #92400e;
+        margin: 0 0 20px 0;
+        font-size: 1.5em;
+      }
+
+      .flow-chart {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      .flow-row {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      .flow-box {
+        background: white;
+        padding: 15px 20px;
+        border-radius: 10px;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        font-weight: 500;
+        color: #92400e;
+        min-width: 150px;
+        text-align: center;
+      }
+
+      .arrow-down {
+        font-size: 24px;
+        color: #f59e0b;
+      }
+
+      @media (max-width: 768px) {
+        .architecture-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .flow-steps {
+          flex-direction: column;
+        }
+
+        .flow-step::after {
+          content: "↓";
+          right: 50%;
+          top: 100%;
+          transform: translateX(50%);
+        }
+
+        .flow-step:last-child::after {
+          display: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <h1>🏥 Rescuers.life</h1>
+        <p>Архітектура додатку першої медичної допомоги</p>
+      </div>
+
+      <div class="main-content">
+        <!-- Основні шари архітектури -->
+        <div class="architecture-grid">
+          <div class="layer">
+            <h3>
+              <div class="layer-icon">UI</div>
+              Frontend Layer
+            </h3>
+            <ul class="component-list">
+              <li>🏠 HomeView.vue - Головна сторінка</li>
+              <li>📚 GuideView.vue - Навчальні матеріали</li>
+              <li>📝 TestView.vue - Тестування знань</li>
+              <li>🗺️ HelpMapView.vue - Карта допомоги</li>
+              <li>❌ NotFoundView.vue - 404 сторінка</li>
+              <li>🎨 App.vue - Головний компонент</li>
+            </ul>
+          </div>
+
+          <div class="layer">
+            <h3>
+              <div class="layer-icon">⚡</div>
+              Business Logic
+            </h3>
+            <ul class="component-list">
+              <li>🧭 Vue Router - Маршрутизація</li>
+              <li>🔥 Firebase SDK - Інтеграція з БД</li>
+              <li>🗺️ Leaflet - Інтерактивні карти</li>
+              <li>🤖 OpenAI API - ШІ-асистент</li>
+              <li>🔄 Reactive State - Стан додатку</li>
+              <li>📍 Geolocation API - Місцезнаходження</li>
+            </ul>
+          </div>
+
+          <div class="layer">
+            <h3>
+              <div class="layer-icon">🔧</div>
+              Infrastructure
+            </h3>
+            <ul class="component-list">
+              <li>🔥 Firebase Realtime Database</li>
+              <li>🌐 Vercel Hosting</li>
+              <li>🗺️ OpenStreetMap Tiles</li>
+              <li>🧠 OpenAI GPT API</li>
+              <li>📊 Hygraph CMS</li>
+              <li>🌍 Google Maps Navigation</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Технологічний стек -->
+        <div class="tech-stack">
+          <h3>🛠️ Технологічний стек</h3>
+          <div class="tech-grid">
+            <div class="tech-category">
+              <h4>Frontend Framework</h4>
+              <ul class="tech-list">
+                <li>Vue.js 3 (Composition API)</li>
+                <li>Vue Router</li>
+                <li>Vite (Build Tool)</li>
+                <li>Tailwind CSS</li>
+              </ul>
+            </div>
+            <div class="tech-category">
+              <h4>Карти та Геолокація</h4>
+              <ul class="tech-list">
+                <li>Leaflet (OpenStreetMap)</li>
+                <li>Geolocation API</li>
+                <li>Google Maps (Навігація)</li>
+              </ul>
+            </div>
+            <div class="tech-category">
+              <h4>Backend Services</h4>
+              <ul class="tech-list">
+                <li>Firebase Realtime Database</li>
+                <li>OpenAI GPT API</li>
+                <li>Hygraph CMS</li>
+              </ul>
+            </div>
+            <div class="tech-category">
+              <h4>Deployment & Hosting</h4>
+              <ul class="tech-list">
+                <li>Vercel (Frontend)</li>
+                <li>Firebase (Database)</li>
+                <li>GitHub (Version Control)</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Потік даних -->
+        <div class="data-flow">
+          <h3>📊 Потік даних у системі</h3>
+          <div class="flow-chart">
+            <div class="flow-row">
+              <div class="flow-box">Користувач</div>
+              <div class="arrow-down">↓</div>
+              <div class="flow-box">Vue Frontend</div>
+            </div>
+            <div class="arrow-down">↓</div>
+            <div class="flow-row">
+              <div class="flow-box">Firebase SDK</div>
+              <div class="flow-box">OpenAI API</div>
+              <div class="flow-box">Hygraph CMS</div>
+            </div>
+            <div class="arrow-down">↓</div>
+            <div class="flow-row">
+              <div class="flow-box">Realtime Database</div>
+              <div class="flow-box">GPT Response</div>
+              <div class="flow-box">CMS Content</div>
+            </div>
+            <div class="arrow-down">↓</div>
+            <div class="flow-row">
+              <div class="flow-box">Live Updates</div>
+              <div class="flow-box">AI Responses</div>
+              <div class="flow-box">Educational Content</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- API з'єднання -->
+        <div class="api-connections">
+          <h3>🔗 API Інтеграції</h3>
+          <div class="api-grid">
+            <div class="api-item">
+              <h4>🔥 Firebase Realtime Database</h4>
+              <p>
+                <strong>Призначення:</strong> Зберігання запитів допомоги в
+                реальному часі
+              </p>
+              <p><strong>Тип:</strong> NoSQL Real-time Database</p>
+              <p><strong>Операції:</strong> CREATE, READ, UPDATE, DELETE</p>
+              <p><strong>Структура:</strong> /helpRequests/{id}</p>
+            </div>
+
+            <div class="api-item">
+              <h4>🤖 OpenAI GPT API</h4>
+              <p>
+                <strong>Призначення:</strong> Генерація відповідей на медичні
+                запитання
+              </p>
+              <p><strong>Модель:</strong> GPT-3.5-turbo</p>
+              <p>
+                <strong>Input:</strong> Питання користувача + контекст медичних
+                відео
+              </p>
+              <p>
+                <strong>Output:</strong> JSON з відповіддю та посиланнями на
+                відео
+              </p>
+            </div>
+
+            <div class="api-item">
+              <h4>📊 Hygraph CMS</h4>
+              <p>
+                <strong>Призначення:</strong> Управління навчальними матеріалами
+              </p>
+              <p><strong>Тип:</strong> GraphQL API</p>
+              <p>
+                <strong>Запит:</strong> query { pages { title, content, image }
+                }
+              </p>
+              <p><strong>Пагінація:</strong> first, skip параметри</p>
+            </div>
+
+            <div class="api-item">
+              <h4>🗺️ Geolocation API</h4>
+              <p>
+                <strong>Призначення:</strong> Визначення місцезнаходження
+                користувача
+              </p>
+              <p><strong>Тип:</strong> Browser Web API</p>
+              <p>
+                <strong>Методи:</strong> getCurrentPosition(), watchPosition()
+              </p>
+              <p><strong>Дозволи:</strong> Потребує згоди користувача</p>
+            </div>
+
+            <div class="api-item">
+              <h4>🌍 Google Maps</h4>
+              <p>
+                <strong>Призначення:</strong> Навігація до місця запиту допомоги
+              </p>
+              <p><strong>Тип:</strong> URL-based navigation</p>
+              <p>
+                <strong>Формат:</strong>
+                https://www.google.com/maps/dir/?api=1&origin=...
+              </p>
+              <p><strong>Безкоштовно:</strong> Без API ключа</p>
+            </div>
+
+            <div class="api-item">
+              <h4>📱 Notifications API</h4>
+              <p>
+                <strong>Призначення:</strong> Сповіщення про нові запити
+                допомоги
+              </p>
+              <p><strong>Тип:</strong> Browser Web API</p>
+              <p><strong>Дозволи:</strong> Notification.permission</p>
+              <p><strong>Тригери:</strong> Нові записи в Firebase</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Користувацькі сценарії -->
+        <div class="flow-diagram">
+          <h3>👤 Основні користувацькі сценарії</h3>
+          <div class="flow-steps">
+            <div class="flow-step">
+              <h4>📚 Навчання</h4>
+              <p>
+                Користувач вивчає матеріали з першої допомоги через Hygraph CMS
+              </p>
+            </div>
+            <div class="flow-step">
+              <h4>📝 Тестування</h4>
+              <p>Проходження тесту на знання першої допомоги з 15 питань</p>
+            </div>
+            <div class="flow-step">
+              <h4>❓ Консультація</h4>
+              <p>Задає питання ШІ-асистенту через OpenAI API</p>
+            </div>
+            <div class="flow-step">
+              <h4>🆘 Запит допомоги</h4>
+              <p>Створює запит про допомогу через Firebase</p>
+            </div>
+            <div class="flow-step">
+              <h4>🚗 Навігація</h4>
+              <p>Отримує маршрут через Google Maps</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
