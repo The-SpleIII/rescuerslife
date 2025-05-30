@@ -674,7 +674,6 @@ async function requestHelp() {
       );
     }
 
-    х;
     showPopup(
       "success",
       "Запит відправлено",
