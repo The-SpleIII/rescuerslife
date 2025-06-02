@@ -499,7 +499,7 @@ async function fetchPages() {
       }
     `;
     const response = await axios.post(
-      import.meta.env.VITE_API_URL,
+      "https://eu-west-2.cdn.hygraph.com/content/cm9gvr98l03i507w70yupz0rv/master",
       {
         query,
       },
